@@ -18,10 +18,10 @@ function main () {
   
   # If the script is running on GitHub, allow debug logging
   # Otherwise, all output is logged
-  if [ -z "${GITHUB_ENV:-}" ]; then
+  if [ ! -z "${GITHUB_ENV:-}" ]; then
     declare -r DEBUG_CMD=::debug::
   else
-    declare -r DEBUG_CMD
+    declare -r DEBUG_CMD=''
   fi
 
   # If the version is not specified, identify the latest version
@@ -29,10 +29,9 @@ function main () {
   if [ -z "${TOOL_VERSION}" ]; then
     echo "${DEBUG_CMD}No version specified"
     declare -r VERSION=$(curl -s https://api.github.com/repos/cli/cli/releases/latest | grep '"tag_name":' | sed -E 's/[^:]+:\ \"v([^\"]+).+/\1/')
-    echo "Installing GH Latest (${VERSION})"
+    echo "GH - latest version is v${VERSION}"
   else
     declare -r VERSION=${TOOL_VERSION}
-    echo "${DEBUG_CMD}Installing GH ${VERSION}"
   fi
 
   # Determine the architecture of the system. This assumes
@@ -50,7 +49,7 @@ function main () {
 
   # If the tool is not already installed, download and install it
   if [ ! -f "${INSTALL_PATH}/bin/gh" ]; then
-    echo "${DEBUG_CMD}Installing GH CLI ${VERSION}"
+    echo "${DEBUG_CMD}Installing GH CLI v${VERSION}"
     declare -r DOWNLOAD_URL="https://github.com/cli/cli/releases/download/v${VERSION}/gh_${VERSION}_linux_${PLATFORM}.tar.gz"
     declare -r BINARY_ARCHIVE="cli.tar.gz"
     
@@ -58,11 +57,13 @@ function main () {
     mkdir -p "${INSTALL_PATH}"
     tar xzvf "${DOWNLOAD_PATH}/${BINARY_ARCHIVE}" -C "${INSTALL_PATH}"  --strip-components=1 > /dev/null
     rm "${DOWNLOAD_PATH}/${BINARY_ARCHIVE}"
+  else
+    echo "${DEBUG_CMD}GH CLI v${VERSION} already installed"
   fi
   
   # If there is a GITHUB_PATH environment variable,
   # append the installation path to it. Otherwise add it to the PATH
-  if [ -z "${GITHUB_PATH:-}" ]; then
+  if [ ! -z "${GITHUB_PATH:-}" ]; then
     echo "${INSTALL_PATH}/bin" >> ${GITHUB_PATH:-/dev/null}
   else
     export PATH=${INSTALL_PATH}/bin:$PATH
@@ -70,7 +71,7 @@ function main () {
 
   # If there is a GITHUB_OUTPUT environment variable,
   # write the installation path and version as step outputs.
-  if [ -z "${GITHUB_OUTPUT:-}" ]; then
+  if [ ! -z "${GITHUB_OUTPUT:-}" ]; then
     echo "path=${INSTALL_PATH}/bin" >> ${GITHUB_OUTPUT:-/dev/null}
     echo "version=$VERSION" >> ${GITHUB_OUTPUT:-/dev/null}
   fi
@@ -78,7 +79,7 @@ function main () {
   # If there is a GITHUB_ENV environment variable,
   # create a GH_VERSION variable with the version. Otherwise,
   # export the version as an environment variable.
-  if [ -z "${GITHUB_ENV:-}" ]; then
+  if [ ! -z "${GITHUB_ENV:-}" ]; then
     echo "GH_VERSION=$VERSION" >> ${GITHUB_ENV:-/dev/null}
   else
     export GH_VERSION=$VERSION
