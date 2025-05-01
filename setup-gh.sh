@@ -29,11 +29,7 @@ function main () {
   fi
   
   declare -r INSTALL_PATH="${TOOL_PATH}/gh-cli/${VERSION}/${PLATFORM}"
-  
-  echo "TOOL PAth: ${TOOL_PATH}"
-  echo "DOWNLOAD PAth: ${DOWNLOAD_PATH}"
-  echo ARC
-  
+
   if [ ! -f "${INSTALL_PATH}/bin/gh" ]; then
     echo "${DEBUG_CMD}Installing GH CLI ${VERSION}"
     declare -r DOWNLOAD_URL="https://github.com/cli/cli/releases/download/v${VERSION}/gh_${VERSION}_linux_${PLATFORM}.tar.gz"
