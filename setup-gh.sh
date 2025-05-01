@@ -72,10 +72,10 @@ function main () {
   # If there is a GITHUB_OUTPUT environment variable,
   # write the installation path and version as step outputs.
   if [ ! -z "${GITHUB_OUTPUT:-}" ]; then
-    echo "Configuring output"
-    echo "  path=${INSTALL_PATH}/bin"
-    echo "  version=$VERSION"
-    echo "  Writing to ${GITHUB_OUTPUT:-/dev/null}"
+    echo "${DEBUG_CMD}Configuring output"
+    echo "${DEBUG_CMD}  PATH=${INSTALL_PATH}/bin"
+    echo "${DEBUG_CMD}  VERSION=$VERSION"
+    echo "${DEBUG_CMD}  Writing to ${GITHUB_OUTPUT:-/dev/null}"
     
     echo "PATH=${INSTALL_PATH}/bin" >> ${GITHUB_OUTPUT:-/dev/null}
     echo "VERSION=$VERSION" >> ${GITHUB_OUTPUT:-/dev/null}
