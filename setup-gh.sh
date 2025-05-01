@@ -55,7 +55,7 @@ function main () {
     echo "version=$VERSION" >> ${GITHUB_OUTPUT:-/dev/null}
   fi
   if [ -z "${GITHUB_ENV:-}" ]; then
-    echo "GH_VERSION=$VERSION"
+    echo "GH_VERSION=$VERSION" >> ${GITHUB_ENV:-/dev/null}
   else
     export GH_VERSION=$VERSION
   fi
