@@ -7,14 +7,18 @@ inputs:
 outputs:
   path:
     description: The path the the tool installation folder
+    value: ${{ steps.run-script.outputs.PATH }}
   version:
     description: The specific version installed
+    value: ${{ steps.run-script.outputs.VERSION }}
     
 runs:
   using: composite
   steps:
     - shell: bash
       working-directory: ${{ runner.temp }}
-      run: ${GITHUB_ACTION_PATH}/setup-gh.sh $TOOL_VERSION
+      run: |
+        ${GITHUB_ACTION_PATH}/setup-gh.sh $TOOL_VERSION
+      id: run-script
       env:
         TOOL_VERSION: ${{ inputs.version }}
