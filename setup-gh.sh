@@ -75,6 +75,7 @@ function main () {
     echo "Configuring output"
     echo "  path=${INSTALL_PATH}/bin"
     echo "  version=$VERSION"
+    echo "  Writing to ${GITHUB_OUTPUT:-/dev/null}"
     
     echo "path=${INSTALL_PATH}/bin" >> ${GITHUB_OUTPUT:-/dev/null}
     echo "version=$VERSION" >> ${GITHUB_OUTPUT:-/dev/null}
