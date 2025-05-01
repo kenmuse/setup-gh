@@ -1,0 +1,20 @@
+name: Setup GH CLI
+description: Install the GitHub CLI 
+inputs:
+  version:
+    description: 'The version of the CLI to be installed (defaults to latest)'
+    required: false
+outputs:
+  path:
+    description: The path the the tool installation folder
+  version:
+    description: The specific version installed
+    
+runs:
+  using: composite
+  steps:
+    - shell: bash
+      working-directory: ${{ runner.temp }}
+      run: ${GITHUB_ACTION_PATH}/setup-gh.sh $TOOL_VERSION
+      env:
+        TOOL_VERSION: ${{ inputs.version }}
