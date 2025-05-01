@@ -77,8 +77,8 @@ function main () {
     echo "  version=$VERSION"
     echo "  Writing to ${GITHUB_OUTPUT:-/dev/null}"
     
-    echo "path=${INSTALL_PATH}/bin" >> ${GITHUB_OUTPUT:-/dev/null}
-    echo "version=$VERSION" >> ${GITHUB_OUTPUT:-/dev/null}
+    echo "PATH=${INSTALL_PATH}/bin" >> ${GITHUB_OUTPUT:-/dev/null}
+    echo "VERSION=$VERSION" >> ${GITHUB_OUTPUT:-/dev/null}
   fi
 
   # If there is a GITHUB_ENV environment variable,
