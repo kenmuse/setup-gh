@@ -46,9 +46,10 @@ function main () {
   # Build the complete installation path. This is where
   # the tool will be unpacked.
   declare -r INSTALL_PATH="${TOOL_PATH}/gh-cli/${VERSION}/${PLATFORM}"
+  declare -r INSTALL_MARKER="${TOOL_PATH}/gh-cli/${VERSION}/${PLATFORM}.complete"
 
   # If the tool is not already installed, download and install it
-  if [ ! -f "${INSTALL_PATH}/bin/gh" ]; then
+  if [ ! -f "${INSTALL_MARKER}" ]; then
     echo "${DEBUG_CMD}Installing GH CLI v${VERSION}"
     declare -r DOWNLOAD_URL="https://github.com/cli/cli/releases/download/v${VERSION}/gh_${VERSION}_linux_${PLATFORM}.tar.gz"
     declare -r BINARY_ARCHIVE="cli.tar.gz"
@@ -57,6 +58,7 @@ function main () {
     mkdir -p "${INSTALL_PATH}"
     tar xzvf "${DOWNLOAD_PATH}/${BINARY_ARCHIVE}" -C "${INSTALL_PATH}"  --strip-components=1 > /dev/null
     rm "${DOWNLOAD_PATH}/${BINARY_ARCHIVE}"
+    touch ${INSTALL_MARKER}
   else
     echo "${DEBUG_CMD}GH CLI v${VERSION} already installed"
   fi
