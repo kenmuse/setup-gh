@@ -1,6 +1,8 @@
 # Setup GH CLI
 
-The `setup-gh` Action configures the GitHub CLI as a GitHub tool using Bash scripts.
+A sample `setup-gh` tool Action that configures the GitHub CLI as a GitHub tool using Bash scripts.
+
+This repository uses bash scripts to show how tools are "installed" on a GitHub runner. It demonstrates how to create a custom tool that downloads and verifies the GitHub CLI binary using a bash script, `sha256sum` (or `shasum`), `curl`, and `grep`.
 
 ## Usage
 
@@ -34,5 +36,5 @@ or
 
 ## Tool path
 
-The CLI is installed in the path `${RUNNER_TOOL_CACHE}/gh-cli/${VERSION}/${PLATFORM}`
+The CLI is installed in the path `${RUNNER_TOOL_CACHE}/gh-cli/${VERSION}/${PLATFORM}`. When the binary is successfully verified and unpacked to that folder, the marker file  `${RUNNER_TOOL_CACHE}/gh-cli/${VERSION}/${PLATFORM}` will be created to indicate success.
 
