@@ -97,9 +97,11 @@ function main () {
     # Use attestation to verify the binary and its build provenance
     # However, this relies on having 'gh' already installed to perform the verification
     # to avoid simply trusting the results from the downloaded binary.
-    if ! ${EXISTING_GH_PATH} at verify -R cli/cli "${DOWNLOAD_PATH}/${BINARY_ARCHIVE}"; then
-      echo "${ERR_CMD}Attestation verification failed. Aborting installation." >&2
-      exit 1
+    if [ ! -z "${EXISTING_GH_PATH}" ]; then
+      if ! ${EXISTING_GH_PATH} at verify -R cli/cli "${DOWNLOAD_PATH}/${BINARY_ARCHIVE}"; then
+        echo "${ERR_CMD}Attestation verification failed. Aborting installation." >&2
+        exit 1
+      fi
     fi
 
     mkdir -p "${INSTALL_PATH}"
